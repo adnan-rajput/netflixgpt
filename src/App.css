@@ -1,0 +1,96 @@
+/* LOGIN PAGE STYLING STARTS  */
+
+.login-clean {
+  background: #f1f7fc;
+  padding: 80px 0;
+  height: 100vh;
+  /* background-color: #505e6c; */
+  /* background: url(../public/login-bg.jpg); */
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.66), rgba(0, 0, 0, 0.66)), url(../public/login-bg.jpg);
+}
+
+
+.login-clean form {
+  max-width: 320px;
+  width: 90%;
+  margin: 0 auto;
+  /* background-color:#ffffff; */
+  padding: 40px;
+  border-radius: 4px;
+  color: #505e6c;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.login-clean .illustration {
+  text-align: center;
+  padding: 0 0 20px;
+  font-size: 100px;
+  color: rgb(244, 71, 107);
+}
+
+.login-clean form .form-control {
+  background: transparent;
+  /* border:none; */
+  border-bottom: 1px solid #dfe7f1;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  color: white;
+  text-indent: 8px;
+  height: 42px;
+}
+
+.login-clean form .btn-primary {
+  background: red;
+  border: none;
+  border-radius: 0;
+  padding: 11px;
+  box-shadow: none;
+  margin-top: 26px;
+  text-shadow: none;
+  outline: none !important;
+  width: 100%;
+}
+
+.login-clean form .btn-primary:hover,
+.login-clean form .btn-primary:active {
+  background: #eb3b60;
+}
+
+.login-clean form .btn-primary:active {
+  transform: translateY(1px);
+}
+
+.login-clean form .forgot {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  color: #6f7a85;
+  opacity: 0.9;
+  text-decoration: none;
+  margin-top: 15px;
+}
+
+.login-clean form .forgot:hover,
+.login-clean form .forgot:active {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.form-group {
+  margin-top: 15px;
+}
+
+.forgot {
+  cursor: pointer;
+}
+
+.Netflixlogo {
+  position: absolute;
+  top: 13px;
+  left: 60px;
+}
+
+
+/* LOGIN PAGE STYLING ENDS  */
