@@ -9,7 +9,14 @@
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.66), rgba(0, 0, 0, 0.66)), url(../public/login-bg.jpg);
 }
 
-
+::-webkit-input-placeholder{
+  color: rgb(97, 99, 98) !important;
+  /* opacity: 0.2; */
+}
+.errormessage{
+  color: red;
+  margin-top: 1px;
+}
 .login-clean form {
   max-width: 320px;
   width: 90%;
