@@ -1,11 +1,14 @@
 import { useRef, useState } from "react";
 import { validateSignIn } from "../utils/validate";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const Login = () => {
 
     const [isSignIn, setIsSignIn] = useState(true)
     const [errorMessageEmail, setErrorMessageEmail] = useState(null);
     const [errorMessagePass, setErrorMessagePass] = useState(null);
+    const [errorMessageFirebase, setErrorMessageFirebase] = useState(null);
 
     const email = useRef(null);
     const password = useRef(null);
@@ -32,14 +35,34 @@ const Login = () => {
             setErrorMessagePass(null);
         }
 
-        if(!isSignIn){
+        if (!isSignIn) {
             // SIGN UP LOGIC 
+            createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log(user);
+                    setErrorMessageFirebase(null)
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    setErrorMessageFirebase(errorCode)
+                });
         }
-        else{
+        else {
             // SIGN IN LOGIC 
+            signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log(user);
+                    setErrorMessageFirebase(null)
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    setErrorMessageFirebase(errorCode)
+                });
         }
-
-
     }
 
     return (
@@ -49,7 +72,7 @@ const Login = () => {
                 <h2 className="sr-only" style={{ color: 'white' }}>{isSignIn ? 'Sign In' : 'Sign Up'}</h2>
                 {/* {!isSignIn && <div className="form-group"><input className="form-control" type="text" name="text" placeholder="User Name" /></div>} */}
                 <div className="form-group"><input id="email" ref={email} className="form-control" type="text" name="email" placeholder="Email" /><p className="errormessage">{errorMessageEmail}</p></div>
-                <div className="form-group"><input id="pass" ref={password} className="form-control" type="password" name="password" placeholder="Password" /><p className="errormessage">{errorMessagePass}</p></div>
+                <div className="form-group"><input id="pass" ref={password} className="form-control" type="password" name="password" placeholder="Password" /><p className="errormessage">{errorMessagePass}</p><p className="errormessage">{errorMessageFirebase}</p></div>
                 <div className="form-group"><button className="btn btn-primary btn-block" onClick={handleSignIn}>{isSignIn ? 'Sign In' : 'Sign Up'}</button></div>
                 <p className="forgot" onClick={toggleForm}>{isSignIn ? 'New to Netflix? Sign up now.' : 'Already a user? Sign In now'}</p>
             </form>
