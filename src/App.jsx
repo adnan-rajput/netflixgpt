@@ -4,6 +4,7 @@ import Login from './components/Login'
 import Browse from './components/Browse'
 import { Provider } from 'react-redux'
 import store from './utils/store'
+import Profile from './components/Profile'
 
 function App() {
 
@@ -11,17 +12,21 @@ function App() {
     [
       {
         path: '/',
-        element : <Login/>
+        element: <Login />
       },
       {
-        path : 'browse',
-        element : <Browse/>
+        path: 'browse',
+        element: <Browse />
+      },
+      {
+        path: 'profile',
+        element: <Profile/>
       }
     ]
   )
   return (
     <Provider store={store}>
-    <RouterProvider router={approuter}/>
+      <RouterProvider router={approuter} />
     </Provider>
   )
 }

@@ -1,9 +1,13 @@
-import { useRef, useState } from "react";
+import { useRef, useState , useEffect } from "react";
 import { validateSignIn } from "../utils/validate";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword , onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { addUser, removeuser } from "../utils/userSlice";
+
+
 
 const Login = () => {
 
@@ -13,6 +17,23 @@ const Login = () => {
     const [errorMessageName, setErrorMessageName] = useState(null);
     const [errorMessageFirebase, setErrorMessageFirebase] = useState(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const uid = user.uid;
+                console.log(uid);
+                dispatch(addUser({ email: user.email, verified: user.emailVerified, name: user.displayName }));
+                navigate('/browse');
+
+            } else {
+                dispatch(removeuser());
+                console.log("Loged Out");
+            }
+        });
+    }, []);
+
 
     const email = useRef(null);
     const password = useRef(null);
@@ -65,12 +86,15 @@ const Login = () => {
                     updateProfile(auth.currentUser, {
                         displayName: name.current.value, photoURL: "https://example.com/jane-q-user/profile.jpg"
                     }).then(() => {
+                        // ADDING USER DATA TO REDUX STORE 
+                        dispatch(addUser({ email: user.email, verified: user.emailVerified, name: user.displayName , phone : user.phoneNumber }));
                         navigate("/Browse");
                     }).catch((error) => {
                         // An error occurred
                         // ...
                     });
-                    
+
+
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -86,6 +110,8 @@ const Login = () => {
                     const user = userCredential.user;
                     console.log(user);
                     setErrorMessageFirebase(null)
+                    // ADDING USER DATA TO REDUX STORE
+                    dispatch(addUser({ email: user.email, verified: user.emailVerified, name: user.displayName , phone : user.phoneNumber }));
                     navigate("/Browse");
                 })
                 .catch((error) => {
